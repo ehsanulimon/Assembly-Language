@@ -2,7 +2,7 @@
 .STACK 100H
 .DATA 
 MSG1 DB 'ENTER TWO NUMBER :$'
-MSG2 DB 'PRINT multiply  :$'     
+MSG2 DB 'RESULT  :$'     
 A DB ?  
 B DB ?
 c DB ?
@@ -10,60 +10,49 @@ c DB ?
 MAIN PROC 
     MOV AX,@DATA
     MOV DS,AX
-           ;input indicator MESSAGE
-    LEA DX,MSG1
+    LEA DX,MSG1 ;input indicator MESSAGE
     MOV AH,9
     INT 21H 
-        ;INPUT FIRST NUMBER
-
-    MOV AH,1
+    MOV AH,1   ;INPUT FIRST NUMBER
     INT 21H 
     SUB AL,30H
     MOV A,AL  
-     
-     ;NEW LINE
-    MOV AH,2
+    MOV AH,2     ;NEW LINE
     MOV DL,0DH
     INT 21H 
     MOV AH,2
     MOV DL,0AH
     INT 21H
-    
-     ;INPUT SECOND NUMBER      
-     
-    MOV AH,1
+    MOV AH,1     ;INPUT SECOND NUMBER    
     INT 21H  
      SUB AL,30H
     MOV B,AL  
-    
-    ;MAIN LOGIC
-  MUL A;
-  MOV C,AL
-  MOV AH,0
-  AAM;
-  ADD AH,30H
-  ADD AL,30H
-  MOV BX,AX
-
-     ;NEW LINE
-    MOV AH,2
+    MUL A;    ;multiplication  LOGIC
+    MOV C,AL
+    MOV AH,0
+    AAM;
+    ADD AH,30H
+    ADD AL,30H
+    MOV BX,AX
+    MOV AH,2  ;NEW LINE
     MOV DL,0DH
     INT 21H 
     MOV AH,2
     MOV DL,0AH
     INT 21H
-    
-    ;OUTPUT indicator MESSAGE
-    LEA DX,MSG2
+    LEA DX,MSG2 ;OUTPUT indicator MESSAGE
     MOV AH,9
     INT 21H
-    
     MOV AH,2
     MOV DL,BH
     INT 21H
-    
     MOV AH,2
     MOV DL,BL
     INT 21H
-    
+       exit:
+       MOV AH,4CH 
+       int 21h
+       MAIN ENDP
+ END MAIN
+
     
